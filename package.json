@@ -1,0 +1,14 @@
+{
+  "name": "qp-assessment",
+  "version": "1.0.0",
+  "description": "Grocery Booking API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Harshal Ogale",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
