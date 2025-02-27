@@ -42,4 +42,4 @@ const handleErrors = (err: Error, req: Request, res: Response, next: NextFunctio
 //===========================================================
 
 
-module.exports = {authenticateToken ,handleErrors}
+module.exports = {authenticateToken ,handleErrors ,isAdmin}

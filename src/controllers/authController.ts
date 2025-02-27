@@ -37,6 +37,7 @@ const registerUser = async (req: Request, res: Response) => {
 // login
 
 const loginUser = async (req: Request, res: Response): Promise<Response> => {
+  console.log(req.body)
   try {
     const { email, password } = req.body;
 
@@ -49,6 +50,7 @@ const loginUser = async (req: Request, res: Response): Promise<Response> => {
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log(isPasswordValid)
     if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
