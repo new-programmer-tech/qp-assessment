@@ -1,0 +1,67 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  username  String   @unique
+  email     String   @unique
+  password  String
+  role      String   @default("user")
+  orders    Order[]
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model GroceryItem {
+  id             Int         @id @default(autoincrement())
+  name           String
+  description    String?
+  price          Decimal     @db.Decimal(10, 2)
+  inventoryCount Int         @map("inventory_count")
+  unit           String
+  isAvailable    Boolean     @default(true) @map("is_available")
+  orderItems     OrderItem[]
+  createdAt      DateTime    @default(now()) @map("created_at")
+  updatedAt      DateTime    @updatedAt @map("updated_at")
+
+  @@map("grocery_items")
+}
+
+model Order {
+  id          Int         @id @default(autoincrement())
+  userId      Int         @map("user_id")
+  user        User        @relation(fields: [userId], references: [id])
+  totalAmount Decimal     @map("total_amount") @db.Decimal(10, 2)
+  status      String      @default("pending")
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now()) @map("created_at")
+  updatedAt   DateTime    @updatedAt @map("updated_at")
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id            Int         @id @default(autoincrement())
+  orderId       Int         @map("order_id")
+  order         Order       @relation(fields: [orderId], references: [id])
+  groceryItemId Int         @map("grocery_item_id")
+  groceryItem   GroceryItem @relation(fields: [groceryItemId], references: [id])
+  quantity      Int
+  unitPrice     Decimal     @map("unit_price") @db.Decimal(10, 2)
+
+  @@map("order_items")
+}
