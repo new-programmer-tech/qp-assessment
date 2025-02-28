@@ -49,7 +49,7 @@ router.delete(
 );
 
 router.patch(
-  "/admin/grocery-items/:id/inventory",
+  "/grocery-items/:id/inventory",
   [
     authenticateToken,
     isAdmin,
@@ -60,10 +60,10 @@ router.patch(
   updateInventory
 );
 
-router.get("/admin/orders", [authenticateToken, isAdmin], getAllOrders);
+router.get("/orders", [authenticateToken, isAdmin], getAllOrders);
 
 router.get(
-  "/admin/orders/:id",
+  "/orders/:id",
   [authenticateToken,
   isAdmin],
   param("id").isInt(),
@@ -72,7 +72,7 @@ router.get(
 );
 
 router.patch(
-  "/admin/orders/:id/status",
+  "/orders/:id/status",
   authenticateToken,
   isAdmin,
   param("id").isInt(),
