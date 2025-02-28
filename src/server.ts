@@ -14,7 +14,7 @@ import userRoutes from './routes/userRoutes'
 import authRoutes from './routes/authRoutes'
 import adminRoutes from './routes/adminRoutes'
 
-const {handleErrors} = require('../src/middleware/authenticateToken ')
+const {handleErrors} = require('./middleware/authenticateToken ')
 
 dotenv.config();
 
