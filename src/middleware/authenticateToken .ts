@@ -9,7 +9,7 @@ import {User} from '../constants'
 
 // Authentication middleware
 const authenticateToken = (req: Request & { user?: User }, res: Response, next: NextFunction) => {
-  const authHeader = req.headers['authorization'];
+  const authHeader = req.headers['authorization'] || req.headers.authorization;
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) return res.status(401).json({ message: 'Authentication required' });
@@ -40,3 +40,6 @@ const handleErrors = (err: Error, req: Request, res: Response, next: NextFunctio
 };
 
 //===========================================================
+
+
+module.exports = {authenticateToken ,handleErrors ,isAdmin}

@@ -10,4 +10,10 @@ interface OrderItem {
   quantity: number;
 }
 
-export { User, OrderItem };
+interface AdminInput {
+  username: string;
+  email: string;
+  password: string;
+}
+
+export { User, OrderItem ,AdminInput};
