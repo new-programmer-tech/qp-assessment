@@ -4,16 +4,16 @@ const express = require("express");
 const router = express.Router();
 const { body, validationResult ,param } = require("express-validator");
 
-// Correct way to import using `require`
 const {addGroceryItem , getGroceryItems ,updateGroceryItem ,deleteGroceryItem ,updateInventory ,getAllOrders ,getOrderById ,updateOrderStatus} = require("../controllers/adminController");
 
 const { authenticateToken, isAdmin } = require('../middleware/authenticateToken ');
 
+// Add Grocery Item
 router.post(
   "/add-grocery-items",
   [
-   [ authenticateToken,
-    isAdmin],
+   authenticateToken,
+    isAdmin,
     body("name").isLength({ min: 2 }).trim(),
     body("price").isFloat({ min: 0.01 }),
     body("inventory_count").isInt({ min: 0 }),
@@ -22,7 +22,10 @@ router.post(
   addGroceryItem
 );
 
-router.get("/get-grocery-items", [authenticateToken, isAdmin], getGroceryItems);
+// Get Grocery Items
+router.get("/get-grocery-items", authenticateToken, isAdmin, getGroceryItems);
+
+// Update Grocery Item
 router.put(
   "/grocery-items/:id",
   [
@@ -37,6 +40,7 @@ router.put(
   updateGroceryItem
 );
 
+// Delete Grocery Item
 router.delete(
   "/grocery-items/:id",
   [
@@ -48,6 +52,7 @@ router.delete(
   deleteGroceryItem
 );
 
+// Update Inventory
 router.patch(
   "/grocery-items/:id/inventory",
   [
@@ -60,17 +65,20 @@ router.patch(
   updateInventory
 );
 
+// Get All Orders
 router.get("/orders", [authenticateToken, isAdmin], getAllOrders);
 
+// Get Order By ID
 router.get(
   "/orders/:id",
-  [authenticateToken,
-  isAdmin],
+  authenticateToken,
+  isAdmin,
   param("id").isInt(),
   validateRequest,
   getOrderById
 );
 
+// Update Order Status
 router.patch(
   "/orders/:id/status",
   authenticateToken,
